@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "TheCocktailZIGRAM"
+    }
+  },
+  "defaultProject": "TheCocktailZIGRAM",
+  "cli": {
+    "analytics": "05f23458-6c74-4784-86da-dd7edd46b05b"
+  }
 }
