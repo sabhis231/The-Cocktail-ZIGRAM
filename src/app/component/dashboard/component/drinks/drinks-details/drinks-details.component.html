@@ -1,0 +1,17 @@
+<!-- <div class="card">
+  <img
+    class="card-img-top img-thumbnail"
+    [src]="data.strDrinkThumb"
+    alt="Card image cap"
+  />
+  <div class="">
+    <p>{{ data.strDrink }}</p>
+  </div>
+</div> -->
+
+<mat-card class="example-card">
+  <mat-card-header>
+    <mat-card-title>{{ data.strDrink }}</mat-card-title>
+  </mat-card-header>
+  <img mat-card-image [src]="data.strDrinkThumb" alt="Photo of a Shiba Inu"/>
+</mat-card>

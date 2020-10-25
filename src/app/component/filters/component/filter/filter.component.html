@@ -1,0 +1,16 @@
+<ul>
+  <li *ngFor="let filtercategoryname of filter.filterCategoryNames">
+    <a
+      (click)="categorySelected(filtercategoryname)"
+      class="text-black-50 cursor-pointer"
+      [routerLink]="['/dashboard']"
+      [queryParams]="{
+        filterName: filterName,
+        filter: filtercategoryname.name
+      }"
+      [ngClass]="queryFilter == filtercategoryname.name ? 'highlight' : ''"
+    >
+      {{ filtercategoryname.name }}
+    </a>
+  </li>
+</ul>

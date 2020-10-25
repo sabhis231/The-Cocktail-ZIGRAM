@@ -1,3 +1,5 @@
+import { FilterCategory } from './../../models/filterCategory.model';
+import { LoadAllFilter } from './../actions/filter.action';
 import * as fromFilterActions from '../actions/filter.action';
 
 export interface State {
@@ -5,7 +7,7 @@ export interface State {
   isLoaded: boolean;
   isError: boolean;
   error: null;
-  filter: [];
+  filter: FilterCategory[];
 }
 
 const initialState: State = {
@@ -21,9 +23,33 @@ export function filterReducer(
   action: fromFilterActions.FilterTypes
 ) {
   switch (action.type) {
-    case fromFilterActions.LOAD_FILTER:
+    case fromFilterActions.LOAD_ALL_FILTER:
       return {
         ...state,
+        isLoading: true,
+        isLoaded: false,
       };
+    case fromFilterActions.LOAD_CATEGORY_FILTER:
+      return {
+        ...state,
+        filter: [...state.filter, action.payload],
+      };
+    case fromFilterActions.LOAD_GLASS_FILTER:
+      return {
+        ...state,
+        filter: [...state.filter, action.payload],
+      };
+    case fromFilterActions.LOAD_INGREDIENT_FILTER:
+      return {
+        ...state,
+        filter: [...state.filter, action.payload],
+      };
+    case fromFilterActions.LOAD_ALCOHOLIC_FILTER:
+      return {
+        ...state,
+        filter: [...state.filter, action.payload],
+      };
+    default:
+      return state;
   }
 }

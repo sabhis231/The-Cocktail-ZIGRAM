@@ -1,1 +1,15 @@
-<p>filters works!</p>
+<mat-accordion class="example-headers-align" multi *ngFor="let filter of filters; let i = index">
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title [ngClass]="queryFilterName == filter.filter.name? 'highlight' : ''">   {{ filter.filter.name }}</mat-panel-title>
+    </mat-expansion-panel-header>
+    <app-filter
+    [filter]="filter"
+    [filterName]="filter.filter.name"
+    [queryFilter]="queryFilter"
+    (selectedFilterCategoryName)="
+      onSelectedFilterCategory($event, filter.filter.ingFilterCode)
+    "
+  ></app-filter>
+  </mat-expansion-panel>
+</mat-accordion>

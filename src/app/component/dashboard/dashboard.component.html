@@ -1,2 +1,14 @@
-<app-filters></app-filters>
-<h1>Dashbord</h1>
+<div class="row">
+  <div class="col-4 col-md-3">
+    <app-filters
+      (selectedFilterData)="selectedFilter($event)"
+      [queryFilter]="queryFilter"
+      [queryFilterName]="queryFilterName"
+    ></app-filters>
+  </div>
+  <div class="col-8 col-md-9">
+    <div class="container">
+      <app-drinks [drinks]="drinks"></app-drinks>
+    </div>
+  </div>
+</div>
