@@ -63,7 +63,7 @@ export class FilterEffects {
         map((resData) => {
           let modelData = this.modelInit(
             resData,
-            'Ingred',
+            'Ingredient',
             'strIngredient1',
             'i'
           );
@@ -86,7 +86,7 @@ export class FilterEffects {
         map((resData) => {
           let modelData = this.modelInit(
             resData,
-            'Alchol',
+            'Alcohol',
             'strAlcoholic',
             'a'
           );
