@@ -1,14 +1,31 @@
-<div class="row">
-  <div class="col-4 col-md-3">
+<div class="row" *ngIf="successFilter; else loader">
+  <div class="col-5 col-md-3">
     <app-filters
       (selectedFilterData)="selectedFilter($event)"
       [queryFilter]="queryFilter"
       [queryFilterName]="queryFilterName"
+      [filters]="filters"
     ></app-filters>
   </div>
-  <div class="col-8 col-md-9">
+  <div class="col-7 col-md-9">
     <div class="container">
-      <app-drinks [drinks]="drinks"></app-drinks>
+      <app-drinks [drinks]="drinks" [isEmpty]="isEmpty"></app-drinks>
     </div>
   </div>
 </div>
+
+<ng-template #loader>
+  
+  <div class="row align-items-center h-75 text-center">
+    <!-- <div class="col"></div> -->
+    <div class="col">
+      <div class="lds-ellipsis">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <p>Please wait while your data is getting ready.</p>
+    </div>
+  </div>
+</ng-template>

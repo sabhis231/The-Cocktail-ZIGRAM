@@ -1,3 +1,4 @@
+import { FilterCategory } from './models/filterCategory.model';
 import {
   Component,
   EventEmitter,
@@ -7,7 +8,6 @@ import {
   ViewChild,
 } from '@angular/core';
 import { MatAccordion } from '@angular/material/expansion';
-import { FilterCategory } from './models/filterCategory.model';
 import { FilterSandbox } from './sandbox/filter.sandox';
 
 @Component({
@@ -18,6 +18,7 @@ import { FilterSandbox } from './sandbox/filter.sandox';
 export class FiltersComponent implements OnInit {
   @Input('queryFilterName') queryFilterName: string;
   @Input('queryFilter') queryFilter: string;
+  @Input('filters') filters: FilterCategory[];
   @Output('selectedFilterData') selectedFilterData = new EventEmitter<{
     filter: { name: string };
     code: string;
@@ -26,16 +27,9 @@ export class FiltersComponent implements OnInit {
   @ViewChild(MatAccordion) accordion: MatAccordion;
 
   isShow = false;
-  filters: FilterCategory[] = [];
   constructor(private filterSandbox: FilterSandbox) {}
 
-  ngOnInit(): void {
-    this.filterSandbox.fetchAllFilter();
-    this.filterSandbox.getAllFilter().subscribe((resData) => {
-      // console.log(resData);
-      this.filters = resData.filter;
-    });
-  }
+  ngOnInit(): void {}
 
   onSelectedFilterCategory(selectedFilter: { name: string }, code: any) {
     this.selectedFilterData.emit({ filter: selectedFilter, code: code });

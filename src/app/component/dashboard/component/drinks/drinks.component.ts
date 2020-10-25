@@ -8,6 +8,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class DrinksComponent implements OnInit {
   @Input('drinks') drinks: Drink[];
+  @Input('isEmpty') isEmpty: boolean;
 
   constructor() {}
 

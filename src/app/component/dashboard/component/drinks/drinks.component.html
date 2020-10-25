@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" *ngIf="!isEmpty; else empty">
   <ng-container *ngFor="let data of drinks; let i = index">
     <div class="col-6 col-md-3 card-box">
       <app-drinks-details [data]="data"></app-drinks-details>
@@ -6,3 +6,11 @@
     <div class="w-100" *ngIf="(i + 1) % 4 === 0"></div>
   </ng-container>
 </div>
+
+<ng-template #empty>
+  <div class="row align-items-center h-75">
+    <div class="col text-center">
+      <p>No data found. Please select another category</p>
+    </div>
+  </div>
+</ng-template>

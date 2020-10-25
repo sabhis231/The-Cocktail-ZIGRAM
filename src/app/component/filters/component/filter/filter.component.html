@@ -5,7 +5,7 @@
       class="text-black-50 cursor-pointer"
       [routerLink]="['/dashboard']"
       [queryParams]="{
-        filterName: filterName,
+        filterName: filter.filter.ingFilterCode,
         filter: filtercategoryname.name
       }"
       [ngClass]="queryFilter == filtercategoryname.name ? 'highlight' : ''"
