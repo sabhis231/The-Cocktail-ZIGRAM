@@ -1,0 +1,16 @@
+<ng-container *ngIf="drinkDetail != null">
+  <h2 mat-dialog-title>{{ drinkDetail.strDrink }}</h2>
+  <h4 mat-dialog-title>Last modified on: {{ drinkDetail.dateModified }}</h4>
+  <mat-dialog-content class="mat-typography">
+    <img
+      mat-card-image
+      [src]="drinkDetail.strDrinkThumb"
+      alt="drinkDetail.strDrinkThumb"
+    />
+    <h2 *ngIf="drinkDetail.strInstructions">How to serve:</h2>
+    <h3>{{ drinkDetail.strInstructions | titlecase }}</h3>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Close</button>
+  </mat-dialog-actions>
+</ng-container>

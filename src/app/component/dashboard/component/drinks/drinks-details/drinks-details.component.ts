@@ -1,6 +1,5 @@
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Drink } from './../../../models/drink.model';
-import { Component, Input, OnInit } from '@angular/core';
-
 @Component({
   selector: 'app-drinks-details',
   templateUrl: './drinks-details.component.html',
@@ -8,8 +7,12 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class DrinksDetailsComponent implements OnInit {
   @Input('data') data: Drink;
+  @Output('selectedDrink') selectedDrink = new EventEmitter<string>();
 
   constructor() {}
 
   ngOnInit(): void {}
+  selectDrink(drinkId) {
+    this.selectedDrink.emit(drinkId);
+  }
 }

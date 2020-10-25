@@ -1,5 +1,5 @@
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { Drink } from './../../models/drink.model';
-import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-drinks',
@@ -9,8 +9,17 @@ import { Component, Input, OnInit } from '@angular/core';
 export class DrinksComponent implements OnInit {
   @Input('drinks') drinks: Drink[];
   @Input('isEmpty') isEmpty: boolean;
+  @Input('filterCode') filterCode: string;
+  @Output('selectedDrink') selectedDrink = new EventEmitter<string>();
+  searchBox = '';
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    
+  }
+
+  selectDrink(drinkId) {
+    this.selectedDrink.emit(drinkId);
+  }
 }

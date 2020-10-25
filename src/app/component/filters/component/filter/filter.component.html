@@ -1,7 +1,6 @@
 <ul>
   <li *ngFor="let filtercategoryname of filter.filterCategoryNames">
     <a
-      (click)="categorySelected(filtercategoryname)"
       class="text-black-50 cursor-pointer"
       [routerLink]="['/dashboard']"
       [queryParams]="{

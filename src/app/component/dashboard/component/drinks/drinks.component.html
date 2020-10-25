@@ -1,16 +1,54 @@
 <div class="row" *ngIf="!isEmpty; else empty">
+  <div class="col-md-9 float-right"></div>
+  <div class="col-md-3">
+    <mat-form-field class="example-form-field">
+      <mat-label>Search Drink</mat-label>
+      <input matInput type="text" [(ngModel)]="searchBox" />
+    </mat-form-field>
+  </div>
   <ng-container *ngFor="let data of drinks; let i = index">
-    <div class="col-6 col-md-3 card-box">
-      <app-drinks-details [data]="data"></app-drinks-details>
+    <div
+      class="col-6 col-md-3 card-box"
+      *ngIf="
+        searchBox != '' &&
+          data.strDrink.toLowerCase().includes(searchBox.toLowerCase());
+        else fullData
+      "
+    >
+      <app-drinks-details
+        [data]="data"
+        (selectedDrink)="selectDrink($event)"
+      ></app-drinks-details>
     </div>
-    <div class="w-100" *ngIf="(i + 1) % 4 === 0"></div>
+    <ng-template #fullData>
+      <div class="col-6 col-md-3 card-box" *ngIf="searchBox == ''">
+        <app-drinks-details
+          [data]="data"
+          (selectedDrink)="selectDrink($event)"
+        ></app-drinks-details>
+      </div>
+    </ng-template>
   </ng-container>
 </div>
-
 <ng-template #empty>
+  <div
+    class="row align-items-center h-75"
+    *ngIf="filterCode == null; else NoDataByFIlter"
+  >
+    <div class="col text-center">
+      <h3>
+        Welcome to
+        <span class="font-weight-bolder">The Cocktail Zigram </span>Please
+        select filter to get your Drink
+      </h3>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #NoDataByFIlter>
   <div class="row align-items-center h-75">
     <div class="col text-center">
-      <p>No data found. Please select another category</p>
+      <h3>Better Luck Next Time Please Select right Catgeory</h3>
     </div>
   </div>
 </ng-template>

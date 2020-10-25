@@ -1,6 +1,5 @@
-import { FilterCategory } from './../../models/filterCategory.model';
-import { LoadAllFilter } from './../actions/filter.action';
 import * as fromFilterActions from '../actions/filter.action';
+import { FilterCategory } from './../../models/filterCategory.model';
 
 export interface State {
   isLoading: boolean;

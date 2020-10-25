@@ -16,4 +16,7 @@ export class DashboardSandbox {
   loadFilteredData(data) {
     this.store.dispatch(new fromDahboardActions.SetFilter(data));
   }
+  loadDringDetails(drinkId) {
+    this.store.dispatch(new fromDahboardActions.LoadDrinksDetails(drinkId));
+  }
 }

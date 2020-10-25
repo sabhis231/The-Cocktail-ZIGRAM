@@ -1,17 +1,11 @@
-import {
-  LoadGlassFilter,
-  LoadIngredientFilter,
-  LOAD_ALCOHOLIC_FILTER,
-} from './../actions/filter.action';
-import { Filters } from './../../models/filters.model';
-import { Filter } from './../../models/filter.model';
-import { FilterCategory } from './../../models/filterCategory.model';
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
-import { catchError, map, mergeMap, switchMap } from 'rxjs/operators';
+import { catchError, map, switchMap } from 'rxjs/operators';
 import { FilterService } from '../../services/filter.service';
 import * as fromFilterActions from '../actions/filter.action';
+import { Filter } from './../../models/filter.model';
+import { FilterCategory } from './../../models/filterCategory.model';
 
 @Injectable()
 export class FilterEffects {
@@ -32,8 +26,6 @@ export class FilterEffects {
           );
 
           filters.push(modelData);
-          console.log(filters);
-
           return new fromFilterActions.LoadCategoryFilter(modelData);
         }),
         catchError((error) => {
@@ -45,7 +37,7 @@ export class FilterEffects {
 
   @Effect()
   fetchGlassFilter = this.action$.pipe(
-    ofType(fromFilterActions.LOAD_CATEGORY_FILTER),
+    ofType(fromFilterActions.LOAD_ALL_FILTER),
     switchMap(() => {
       let filters: FilterCategory[] = [];
       return this.filterService.getGlassesFilter().pipe(
@@ -53,8 +45,6 @@ export class FilterEffects {
           let modelData = this.modelInit(resData, 'Glass', 'strGlass', 'g');
 
           filters.push(modelData);
-          console.log(filters);
-
           return new fromFilterActions.LoadGlassFilter(modelData);
         }),
         catchError((error) => {
@@ -66,7 +56,7 @@ export class FilterEffects {
 
   @Effect()
   fetchIngredFilter = this.action$.pipe(
-    ofType(fromFilterActions.LOAD_GLASS_FILTER),
+    ofType(fromFilterActions.LOAD_ALL_FILTER),
     switchMap(() => {
       let filters: FilterCategory[] = [];
       return this.filterService.getIngredientsFilter().pipe(
@@ -79,8 +69,6 @@ export class FilterEffects {
           );
 
           filters.push(modelData);
-          console.log(filters);
-
           return new fromFilterActions.LoadIngredientFilter(modelData);
         }),
         catchError((error) => {
@@ -91,7 +79,7 @@ export class FilterEffects {
   );
   @Effect()
   fetchAlchoFilter = this.action$.pipe(
-    ofType(fromFilterActions.LOAD_INGREDIENT_FILTER),
+    ofType(fromFilterActions.LOAD_ALL_FILTER),
     switchMap(() => {
       let filters: FilterCategory[] = [];
       return this.filterService.getAlcoholicFilter().pipe(
@@ -102,10 +90,7 @@ export class FilterEffects {
             'strAlcoholic',
             'a'
           );
-
           filters.push(modelData);
-          console.log(filters);
-
           return new fromFilterActions.LoadAlcoholicFilter(modelData);
         }),
         catchError((error) => {
@@ -129,7 +114,6 @@ export class FilterEffects {
       filter: filter,
       filterCategoryNames: data,
     };
-    // console.log(modelData);
     return modelData;
   }
 }

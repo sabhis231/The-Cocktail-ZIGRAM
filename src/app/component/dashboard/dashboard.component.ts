@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
+import { ModelBoxService } from '../model-box/services/model-box.service';
 import { FilterCategory } from './../filters/models/filterCategory.model';
 import { FilterSandbox } from './../filters/sandbox/filter.sandox';
 import { Drink } from './models/drink.model';
@@ -16,14 +17,17 @@ export class DashboardComponent implements OnInit {
   filters: FilterCategory[] = [];
   successFilter: boolean = false;
   isEmpty: boolean = false;
+  filterCode: string = null;
 
   constructor(
     private dashboardSandbox: DashboardSandbox,
     private route: ActivatedRoute,
-    private filterSandbox: FilterSandbox
+    private filterSandbox: FilterSandbox,
+    private modelBoxService: ModelBoxService
   ) {}
 
   ngOnInit(): void {
+    this.filterSandbox.fetchAllFilter();
     this.route.queryParamMap.subscribe((params: Params) => {
       this.queryFilter = params.params.filter;
       this.queryFilterName = params.params.filterName;
@@ -39,28 +43,25 @@ export class DashboardComponent implements OnInit {
         });
       }
     });
-    this.filterSandbox.fetchAllFilter();
     this.filterSandbox.getAllFilter().subscribe((resData) => {
       this.filters = resData.filter;
-      if (this.filters.length == 4) {
+      if (this.filters.length == 4 && !resData.isError) {
         this.successFilter = true;
       }
     });
     this.dashboardSandbox.getAllData().subscribe((resData) => {
       this.drinks = resData.drinks;
-      console.log(resData);
       if (this.drinks.length < 1) {
         this.isEmpty = true;
-      }else {
+      } else {
         this.isEmpty = false;
       }
+      this.filterCode = resData.setFilterCode;
     });
   }
 
-  selectedFilter(filter) {
-    // this.dashboardSandbox.loadFilteredData({
-    //   code: filter['code'],
-    //   category: filter['filter']['name'],
-    // });
+  selectedDrink(drinkId) {
+    this.dashboardSandbox.loadDringDetails(drinkId);
+    this.modelBoxService.openDialog();
   }
 }
