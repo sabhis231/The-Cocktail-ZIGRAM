@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { ModelBoxService } from '../model-box/services/model-box.service';
 import { FilterCategory } from './../filters/models/filterCategory.model';
 import { FilterSandbox } from './../filters/sandbox/filter.sandox';
@@ -10,7 +11,8 @@ import { DashboardSandbox } from './sandbox/dashboard.sandbox';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy {
+  sub: Subscription[] = [];
   drinks: Drink[] = [];
   queryFilter: string = '';
   queryFilterName: string = '';
@@ -28,40 +30,50 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.filterSandbox.fetchAllFilter();
-    this.route.queryParamMap.subscribe((params: Params) => {
-      this.queryFilter = params.params.filter;
-      this.queryFilterName = params.params.filterName;
-      if (
-        this.queryFilter &&
-        this.queryFilterName &&
-        this.queryFilterName != '' &&
-        this.queryFilter != ''
-      ) {
-        this.dashboardSandbox.loadFilteredData({
-          code: this.queryFilterName,
-          category: this.queryFilter,
-        });
-      }
-    });
-    this.filterSandbox.getAllFilter().subscribe((resData) => {
-      this.filters = resData.filter;
-      if (this.filters.length == 4 && !resData.isError) {
-        this.successFilter = true;
-      }
-    });
-    this.dashboardSandbox.getAllData().subscribe((resData) => {
-      this.drinks = resData.drinks;
-      if (this.drinks.length < 1) {
-        this.isEmpty = true;
-      } else {
-        this.isEmpty = false;
-      }
-      this.filterCode = resData.setFilterCode;
-    });
+    this.sub.push(
+      this.route.queryParamMap.subscribe((params: Params) => {
+        this.queryFilter = params.params.filter;
+        this.queryFilterName = params.params.filterName;
+        if (
+          this.queryFilter &&
+          this.queryFilterName &&
+          this.queryFilterName != '' &&
+          this.queryFilter != ''
+        ) {
+          this.dashboardSandbox.loadFilteredData({
+            code: this.queryFilterName,
+            category: this.queryFilter,
+          });
+        }
+      })
+    );
+    this.sub.push(
+      this.filterSandbox.getAllFilter().subscribe((resData) => {
+        this.filters = resData.filter;
+        if (this.filters.length == 4 && !resData.isError) {
+          this.successFilter = true;
+        }
+      })
+    );
+    this.sub.push(
+      this.dashboardSandbox.getAllData().subscribe((resData) => {
+        this.drinks = resData.drinks;
+        if (this.drinks.length < 1) {
+          this.isEmpty = true;
+        } else {
+          this.isEmpty = false;
+        }
+        this.filterCode = resData.setFilterCode;
+      })
+    );
   }
 
   selectedDrink(drinkId) {
     this.dashboardSandbox.loadDringDetails(drinkId);
     this.modelBoxService.openDialog();
+  }
+
+  ngOnDestroy() {
+    this.sub.forEach((s) => s.unsubscribe());
   }
 }
