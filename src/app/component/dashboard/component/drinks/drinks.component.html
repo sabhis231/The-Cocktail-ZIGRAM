@@ -1,14 +1,14 @@
 <div class="row" *ngIf="!isEmpty; else empty">
-  <div class="col-md-9 float-right"></div>
-  <div class="col-md-3">
+  <!-- <div class="col-2 col-md-9"></div>
+  <div class="col-5 col-md-3">
     <mat-form-field class="example-form-field">
       <mat-label>Search Drink</mat-label>
       <input matInput type="text" [(ngModel)]="searchBox" />
     </mat-form-field>
-  </div>
+  </div> -->
   <ng-container *ngFor="let data of drinks; let i = index">
     <div
-      class="col-6 col-md-3 card-box"
+      class="col-11 col-sm-6 col-md-3 card-box"
       *ngIf="
         searchBox != '' &&
           data.strDrink.toLowerCase().includes(searchBox.toLowerCase());
@@ -21,7 +21,7 @@
       ></app-drinks-details>
     </div>
     <ng-template #fullData>
-      <div class="col-6 col-md-3 card-box" *ngIf="searchBox == ''">
+      <div class="col-11 col-sm-6 col-md-3 card-box" *ngIf="searchBox == ''">
         <app-drinks-details
           [data]="data"
           (selectedDrink)="selectDrink($event)"
